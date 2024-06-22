@@ -29,3 +29,28 @@ export class Dust extends Particles {
         ctx.fill();
     }
 }
+
+export class Fire extends Particles {
+    constructor (game, x, y) {
+        super(game);
+        this.image = fireImage;
+        this.x = x;
+        this.y = y;
+        this.speedX = 1;
+        this.speedY = 1;
+        this.size = Math.random() * 100 + 100;
+        this.angle = 0;
+        this.va = Math.random() * 0.2 - 0.1;
+    }
+
+    update () {
+        super.update();
+        this.angle += this.va;
+        this.x += Math.sin(this.angle);
+    }
+
+    draw (ctx) {
+        ctx.drawImage(this.image, this.x, this.y, this.size * 0.2, this.size * 0.2);
+       
+    }
+}

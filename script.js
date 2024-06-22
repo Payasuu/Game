@@ -63,7 +63,7 @@ window.addEventListener('load', function () {
             this.particles.forEach(particles => {
                 particles.draw(ctx);
             });
-           
+           if (this.particles.length > 50) this.particles.length = 50;
         }
         
     addEnemy () {

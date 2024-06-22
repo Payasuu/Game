@@ -1,4 +1,4 @@
-import { Dust } from "./particles.js";
+import { Dust, Fire } from "./particles.js";
 const states = {
     IDLE: 0,
     WALK: 1,
@@ -124,6 +124,7 @@ export class Flying extends State {
     }
 
     stateChanger (input) {
+        this.game.particles.push(new Fire(this, this.game.player.x + (this.game.player.width * 0.5), this.game.player.y + (this.game.player.height * 0.5)))
         if (this.game.player.x > this.game.width - this.game.player.width) this.game.player.x = this.game.width - this.game.player.width
         if (input.includes('ArrowRight')) {
             this.game.player.speed += 15;
