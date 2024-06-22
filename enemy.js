@@ -59,7 +59,7 @@ export class FlyingEnemy extends Enemy {
         this.image = bat;
         this.maxFrame = 7;
         this.speed = 3;
-        this.va = Math.random() * 0.1 - 0.1;
+        this.va = Math.random() * 0.1 + 0.1;
         this.angle = 0;
     }
     draw (ctx) {
