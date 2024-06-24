@@ -1,4 +1,5 @@
 import { Idle, Walk, Running, Flying, Jump, Defense, Slide } from "./state.js";
+import { Collision } from "./collision.js";
 export class Player {
     constructor (game) {
         this.game = game;
@@ -31,6 +32,7 @@ export class Player {
     }
 
     update (deltaTime, input) {
+        this.checkCollision()
         this.currentState.stateChanger(input)
         if (this.frameTimer > this.frameInterval) {
             this.frameTimer = 0;
@@ -85,4 +87,16 @@ export class Player {
         ctx.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
     }
     
+    checkCollision () {
+        this.game.enemies.forEach(enemy => {
+            if (enemy.x < this.x + this.width /2&& 
+                enemy.x + enemy.spriteWidth > this.x &&
+                enemy.y < this.y + this.height && 
+                enemy.y + enemy.spriteHeight > this.y
+            ){
+                enemy.markForDeletion = true;
+                this.game.collision.push(new Collision(this, enemy.x, enemy.y))
+            }
+        });
+    }
 }

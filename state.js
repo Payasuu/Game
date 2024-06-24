@@ -63,7 +63,7 @@ export class Walk extends State {
 
     stateChanger (input) {
         this.game.particles.push(new Dust(this, this.game.player.x + (this.game.player.width * 0.3), this.game.player.y + this.game.player.height))
-        console.log(this.game.particles)
+        
         if (input.includes('ArrowRight')) {
             this.game.player.stateHandler(states.RUNNING, 1.5)
         }

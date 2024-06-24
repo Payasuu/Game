@@ -22,7 +22,7 @@ window.addEventListener('load', function () {
             this.enemyType = ['zombie', 'bat'];
             this.enemies = [];
             this.particles = [];
-           
+            this.collision = [];
         }
         //Adding enemy
         update (deltaTime) {
@@ -51,6 +51,12 @@ window.addEventListener('load', function () {
                     this.particles.splice(index, 1)
                 }
             });
+            this.collision.forEach((collision, index) => {
+                collision.update(deltaTime);
+                if(collision.markForDeletion) {
+                    this.collision.splice(index, 1);
+                }
+            });
            
         }
 
@@ -60,9 +66,13 @@ window.addEventListener('load', function () {
             this.enemies.forEach(enemy => {
                 enemy.draw(ctx)
             });
+            this.collision.forEach(collision => {
+                collision.draw(ctx);
+            });
             this.particles.forEach(particles => {
                 particles.draw(ctx);
             });
+            
            if (this.particles.length > 50) this.particles.length = 50;
         }
         
