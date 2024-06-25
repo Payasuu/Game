@@ -96,6 +96,12 @@ export class Player {
             ){
                 enemy.markForDeletion = true;
                 this.game.collision.push(new Collision(this, enemy.x, enemy.y))
+                if (this.currentState === this.state[3] ||
+                    this.currentState === this.state[6]
+                ){}
+                else {
+                    this.stateHandler(5, 0)
+                }
             }
         });
     }

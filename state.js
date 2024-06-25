@@ -41,9 +41,6 @@ export class Idle extends State {
         else if (input.includes(' ')) {
             this.game.player.stateHandler(states.FLYING, 3)
         }
-        else if (input.includes('z')) {
-            this.game.player.stateHandler(states.DEFENSE, 0)
-        }
         else if (input.includes('ArrowDown') && this.game.player.onGround()) {
             this.game.player.stateHandler(states.SLIDE, 1.5);
         }
@@ -73,9 +70,6 @@ export class Walk extends State {
         else if (input.includes('ArrowUp')) {
             this.game.player.stateHandler(states.JUMP, 1)
         }
-        else if (input.includes('z') && this.game.player.onGround()) {
-            this.game.player.stateHandler(states.DEFENSE, 0);
-        }
         else if (input.includes('ArrowDown') && this.game.player.onGround()) {
             this.game.player.stateHandler(states.SLIDE, 1.5);
         }
@@ -99,9 +93,6 @@ export class Running extends State {
         }
         else if (input.includes(' ')) {
             this.game.player.stateHandler(states.FLYING, 3)
-        }
-        else if (input.includes('z') && this.game.player.onGround()) {
-            this.game.player.stateHandler(states.DEFENSE, 0);
         }
         else if (input.includes('ArrowDown') && this.game.player.onGround()) {
             this.game.player.stateHandler(states.SLIDE, 1.5);
@@ -185,11 +176,16 @@ export class Defense extends State {
     }
 
     stateChanger (input) {
+        setTimeout(() => {
+            if (this.game.player.frameX > 1 && this.game.player.onGround()) {
+                this.game.player.stateHandler(states.IDLE, 0)
+            }
+            else if (this.game.player.frameX > 1 && !this.game.player.onGround()) {
+                this.game.player.stateHandler(states.JUMP, 0)
+            }
+        }, 600)
         
-        if (!input.includes('z') && this.game.player.onGround()) {
-            this.game.player.stateHandler(states.IDLE, 0)
-        }
-        else if (input.includes('ArrowRight')) {
+        if (input.includes('ArrowRight')) {
             this.game.player.speed = 0;
         }
         else if (input.includes('ArrowLeft')) {
