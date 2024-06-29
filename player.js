@@ -95,6 +95,7 @@ export class Player {
                 enemy.y + enemy.spriteHeight > this.y
             ){
                 enemy.markForDeletion = true;
+                this.game.score++;
                 this.game.collision.push(new Collision(this, enemy.x, enemy.y))
                 if (this.currentState === this.state[3] ||
                     this.currentState === this.state[6]
