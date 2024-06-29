@@ -72,3 +72,28 @@ export class FlyingEnemy extends Enemy {
         this.y += Math.sin(this.angle);
     }
 }
+
+export class Virus extends Enemy {
+    constructor (game) {
+        super(game);
+        this.x = this.game.width;
+        this.y = Math.random() * this.game.height * 0.6
+        this.spriteWidth = 103;
+        this.spriteHeight = 100;
+        this.image = virus;
+        this.maxFrame = 6;
+        this.speed = 2;
+        this.va = Math.random() * 0.1
+        this.angle = 0
+    }
+    draw (ctx) {
+        ctx.drawImage(this.image, this.frameX * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.spriteWidth / 1.5, this.spriteHeight / 1.5)
+    }
+   update (deltaTime) {
+        super.update(deltaTime)
+        this.angle += this.va;
+        this.y += Math.sin(this.angle);
+    
+   }
+   
+}

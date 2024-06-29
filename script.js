@@ -1,7 +1,8 @@
 import { InputHandler } from "./input.js";
 import { Player } from "./player.js";
 import { Background } from "./background.js"
-import { Zombie, FlyingEnemy } from "./enemy.js";
+import { Zombie, FlyingEnemy, Virus } from "./enemy.js";
+import { UI } from "./UI.js";
 window.addEventListener('load', function () {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -17,12 +18,18 @@ window.addEventListener('load', function () {
             this.player = new Player(this);
             this.input = new InputHandler();
             this.background = new Background(this)
-            this.enemyInterval = 2000;
+            this.ui = new UI(this);
+            this.enemyInterval = 500;
             this.enemyTimer = 0;
-            this.enemyType = ['zombie', 'bat'];
+            this.enemyType = ['zombie', 'bat', 'virus'];
             this.enemies = [];
             this.particles = [];
             this.collision = [];
+            this.gameOver = false;
+            this.score = 0;
+            this.time = 0;
+            this.maxTime = 100000;
+            this.lives = 5;
         }
         //Adding enemy
         update (deltaTime) {
@@ -57,6 +64,10 @@ window.addEventListener('load', function () {
                     this.collision.splice(index, 1);
                 }
             });
+            this.time += deltaTime;
+            if (this.time > this.maxTime) {
+                this.gameOver = true;
+            }
            
         }
 
@@ -74,6 +85,7 @@ window.addEventListener('load', function () {
             });
             
            if (this.particles.length > 50) this.particles.length = 50;
+           this.ui.draw(ctx);
         }
         
     addEnemy () {
@@ -84,7 +96,9 @@ window.addEventListener('load', function () {
         else if (randomEnemies === 'bat') {
             this.enemies.push(new FlyingEnemy(this))
         }
-       
+        else if (randomEnemies === 'virus') {
+            this.enemies.push(new Virus(this))
+        }
     }
     }
 
@@ -97,7 +111,7 @@ window.addEventListener('load', function () {
         game.update(deltaTime);
         game.draw(ctx);
 
-        requestAnimationFrame(animate);
+        if (!game.gameOver)requestAnimationFrame(animate);
     }
     animate(0);
 });

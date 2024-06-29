@@ -14,7 +14,6 @@ class State {
         this.game = game;
         this.maxTimer = 20;
         this.timer = 0;
-        
     }
 }
 export class Idle extends State {
@@ -39,7 +38,7 @@ export class Idle extends State {
             this.game.player.stateHandler(states.JUMP, 1)
         }
         else if (input.includes(' ')) {
-            this.game.player.stateHandler(states.FLYING, 3)
+            this.game.player.stateHandler(states.FLYING, 2)
         }
         else if (input.includes('ArrowDown') && this.game.player.onGround()) {
             this.game.player.stateHandler(states.SLIDE, 1.5);
@@ -55,17 +54,15 @@ export class Walk extends State {
         this.game.player.maxFrame = 0
         this.game.player.frameY = 1;
         this.game.player.maxFrame = 9;
-       
     }
 
     stateChanger (input) {
         this.game.particles.push(new Dust(this, this.game.player.x + (this.game.player.width * 0.3), this.game.player.y + this.game.player.height))
-        
-        if (input.includes('ArrowRight')) {
-            this.game.player.stateHandler(states.RUNNING, 1.5)
+        if (input.includes(' ')) {
+            this.game.player.stateHandler(states.FLYING, 2);
         }
-        else if (input.includes(' ')) {
-            this.game.player.stateHandler(states.FLYING, 3)
+        else if (input.includes('ArrowRight')) {
+            this.game.player.stateHandler(states.RUNNING, 1.5)
         }
         else if (input.includes('ArrowUp')) {
             this.game.player.stateHandler(states.JUMP, 1)
@@ -92,7 +89,7 @@ export class Running extends State {
             this.game.player.stateHandler(states.WALK, 0.6)
         }
         else if (input.includes(' ')) {
-            this.game.player.stateHandler(states.FLYING, 3)
+            this.game.player.stateHandler(states.FLYING, 2)
         }
         else if (input.includes('ArrowDown') && this.game.player.onGround()) {
             this.game.player.stateHandler(states.SLIDE, 1.5);
@@ -110,8 +107,6 @@ export class Flying extends State {
         this.game.player.frameY = 3;
         this.game.player.maxFrame = 6;
         this.game.player.weight = 0;
-        
-        
     }
 
     stateChanger (input) {
@@ -150,7 +145,6 @@ export class Jump extends State {
         this.game.player.frameY = 5;
         this.game.player.maxFrame = 5;
         this.game.player.weight = 1;
-       
         
     }
 

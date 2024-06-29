@@ -48,11 +48,11 @@ export class Player {
         }
         // horizontal movements
         this.x += this.speed;
-        if (input.includes('ArrowRight')) {
+        if (input.includes('ArrowRight') && this.currentState !== this.state[6]) {
             this.speed = 8;
         }
 
-        else if (input.includes('ArrowLeft')) {
+        else if (input.includes('ArrowLeft') && this.currentState !== this.state[6]) {
             this.speed = -6;
         }
 
@@ -95,12 +95,17 @@ export class Player {
                 enemy.y + enemy.spriteHeight > this.y
             ){
                 enemy.markForDeletion = true;
+                this.game.score++;
                 this.game.collision.push(new Collision(this, enemy.x, enemy.y))
                 if (this.currentState === this.state[3] ||
                     this.currentState === this.state[6]
                 ){}
                 else {
                     this.stateHandler(5, 0)
+                    this.game.lives--;
+                    if (this.game.lives <= 0) {
+                        this.game.gameOver = true;
+                    }
                 }
             }
         });
